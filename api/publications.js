@@ -1,24 +1,25 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer'); // Use puppeteer instead of puppeteer-core
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function scrapeGoogleScholar() {
   const url = "https://scholar.google.co.in/citations?user=aWWJczwAAAAJ&hl=en";
+  
   const browser = await puppeteer.launch({
-    headless: true,  // Set to false to debug in the browser
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    headless: true,  // Make sure headless mode is set to true
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],  // Disable sandboxing
     timeout: 60000,  // Set timeout to 60 seconds
   });
+
   const page = await browser.newPage();
 
   try {
-    // Navigate to the page
     const navigationPromise = page.goto(url, {
       waitUntil: 'domcontentloaded',
       timeout: 60000,  // 60-second timeout
     });
     await navigationPromise;
 
-    await page.waitForSelector('.gsc_a_tr', { timeout: 60000 });  // Wait for the publication table
+    await page.waitForSelector('.gsc_a_tr', { timeout: 60000 });
 
     let publications = [];
     const scrapePublications = async () => {
@@ -37,11 +38,11 @@ async function scrapeGoogleScholar() {
     publications = await scrapePublications();
 
     let showMoreButtonVisible = await page.$('#gsc_bpf_more');
-    let previousLength = publications.length;  // Initialize previousLength to the current length of publications
+    let previousLength = publications.length;
 
     while (showMoreButtonVisible) {
       await page.click('#gsc_bpf_more');
-      await delay(2000); // Delay for 2 seconds before scraping again
+      await delay(2000);
 
       const newPublications = await scrapePublications();
       newPublications.forEach((pub) => {
@@ -54,7 +55,7 @@ async function scrapeGoogleScholar() {
         break;
       }
 
-      previousLength = publications.length;  // Update previousLength after adding new publications
+      previousLength = publications.length;
       showMoreButtonVisible = await page.$('#gsc_bpf_more');
     }
 
@@ -63,7 +64,7 @@ async function scrapeGoogleScholar() {
   } catch (error) {
     console.error("Error scraping Google Scholar:", error);
     await browser.close();
-    throw error;  // Rethrow error after closing the browser
+    throw error;
   }
 }
 
