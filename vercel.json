@@ -1,4 +1,11 @@
 {
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/publications.js",
+        "use": "@vercel/node"
+      }
+    ],
     "functions": {
       "api/publications.js": {
         "maxDuration": 30
