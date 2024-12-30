@@ -1,9 +1,9 @@
 {
+    "version": 2,
     "functions": {
       "api/publications.js": {
         "maxDuration": 30
       }
     }
-    
   }
   
