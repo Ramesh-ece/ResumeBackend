@@ -4,6 +4,12 @@
       "api/publications.js": {
         "maxDuration": 30
       }
-    }
+    },
+    "builds": [
+      {
+        "src": "api/publications.js",
+        "use": "@vercel/node"
+      }
+    ]
   }
   
