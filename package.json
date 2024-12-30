@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npx playwright install && sudo apt-get update && sudo apt-get install -y libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 libavif0 libenchant1c2a libsecret-1-0 libmanette-0.2-0 libgles2-mesa"
+    "start": "vercel dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "playwright": "^1.49.1",
+    "puppeteer": "^23.11.1",
     "puppeteer-core": "^10.4.0",
     "react-chartjs-2": "^5.2.0"
   }

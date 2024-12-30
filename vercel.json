@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/publications.js": {
+        "maxDuration": 30
+      }
+    }
+  }
+  
