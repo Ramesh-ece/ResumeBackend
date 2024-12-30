@@ -1,6 +1,7 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const cors = require('cors');
+const chromium = require('chrome-aws-lambda'); // Use chrome-aws-lambda for Render
 
 const app = express();
 const PORT = 4000;
@@ -18,7 +19,15 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // Function to scrape Google Scholar
 async function scrapeGoogleScholar() {
   const url = "https://scholar.google.co.in/citations?user=aWWJczwAAAAJ&hl=en";
-  const browser = await puppeteer.launch({ headless: true });
+
+  // Launching Puppeteer with chromium configuration
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: chromium.args,
+    executablePath: await chromium.executablePath,
+    userDataDir: '/tmp/user_data', // Ensures clean session for each invocation
+  });
+
   const page = await browser.newPage();
 
   await page.goto(url);
