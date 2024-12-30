@@ -3,11 +3,13 @@
     "builds": [
       {
         "src": "api/publications.js",
-        "use": "@vercel/node",
-        "config": {
-          "maxDuration": 30
-        }
+        "use": "@vercel/node"
       }
-    ]
+    ],
+    "functions": {
+      "api/publications.js": {
+        "maxDuration": 30
+      }
+    }
   }
   
